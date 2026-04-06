@@ -14,8 +14,8 @@ public class ScoreRequest {
     @NotNull(message = "Team ID is required")
     private Long teamId;
     
-    @NotNull(message = "Sprint ID is required")
-    private Long sprintId;
+    @NotNull(message = "Sprint Number is required")
+    private Integer sprintNumber;
     
     @Min(value = 0, message = "Marks must be non-negative")
     private Integer marks = 0;

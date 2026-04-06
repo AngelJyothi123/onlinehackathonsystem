@@ -31,11 +31,13 @@ public class ScoreService {
         Team team = teamRepository.findById(scoreRequest.getTeamId())
             .orElseThrow(() -> new ResourceNotFoundException("Team not found with id: " + scoreRequest.getTeamId()));
         
-        Sprint sprint = sprintRepository.findById(scoreRequest.getSprintId())
-            .orElseThrow(() -> new ResourceNotFoundException("Sprint not found with id: " + scoreRequest.getSprintId()));
+        // Lookup by sprintNumber
+        Sprint sprint = sprintRepository.findBySprintNumber(scoreRequest.getSprintNumber())
+            .orElseThrow(() -> new ResourceNotFoundException("Sprint not found with number: " + scoreRequest.getSprintNumber()));
         
+        // Find existing score
         Score existingScore = scoreRepository.findByTeamIdAndSprintId(
-            scoreRequest.getTeamId(), scoreRequest.getSprintId()).orElse(null);
+            scoreRequest.getTeamId(), sprint.getId()).orElse(null);
         
         if (existingScore != null) {
             existingScore.setMarks(scoreRequest.getMarks());
